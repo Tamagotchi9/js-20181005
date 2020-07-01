@@ -1,22 +1,23 @@
 import Component from '../../component.js';
 
 export default class PhoneCatalog extends Component {
-  constructor({ element, phones, onPhoneSelected }) {
+  constructor({ element, phones }) {
     super({ element });
 
     this._phones = phones;
-    this._onPhoneSelected = onPhoneSelected;
 
     this._render();
 
-    this._element.addEventListener('click', (event) => {
-      let phoneElement = event.target.closest('[data-element="phone-item"]');
+    this.on('click', 'phone-link',  (event) => {
+      const phoneElement = event.target.closest('[data-element="phone-item"]');
 
-      if (!phoneElement) {
-        return;
-      }
+      this.emit('phone-selected', phoneElement.dataset.phoneId);
+    });
 
-      this._onPhoneSelected(phoneElement.dataset.phoneId);
+    this.on('click', "add-button",  (event) => {
+      const phoneElement = event.target.closest('[data-element="phone-item"]');
+
+      this.emit('add', phoneElement.dataset.phoneId);
     });
   }
 
@@ -25,17 +26,17 @@ export default class PhoneCatalog extends Component {
       <ul class="phones">
         ${ this._phones.map(phone => `
           <li class="thumbnail" data-element="phone-item" data-phone-id="${ phone.id }">
-            <a href="#${ phone.id }" class="thumb">
+            <a href="#${ phone.id }" class="thumb" data-element="phone-link">
               <img alt="${ phone.name }" src="${ phone.imageUrl }">
             </a>
   
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
+              <a class="btn btn-success" data-element="add-button">
                 Add
               </a>
             </div>
   
-            <a href="#${ phone.id }">${ phone.name }</a>
+            <a href="#${ phone.id }" data-element="phone-link">${ phone.name }</a>
             <p>${ phone.snippet }</p>
           </li>
         `).join('') }
