@@ -5,6 +5,10 @@ export  default class Filter extends Component {
         super({ element });
 
         this._render();
+
+        this.on('input', 'query', (event) => {
+            this.emit('filter',event.delegateTarget.value);
+        });
     }
 
     _render() {
@@ -12,7 +16,7 @@ export  default class Filter extends Component {
         <section>
             <p>
               Search:
-              <input>
+              <input data-element="query">
             </p>
     
             <p>

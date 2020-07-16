@@ -21,12 +21,12 @@ export default class PhonesPage {
   _initCatalog() {
     this._catalog = new PhoneCatalog({
       element: this._element.querySelector('[data-component="phone-catalog"]'),
-      phones: PhoneService.getAll(),
-
     });
 
-    this._catalog.subscribe('add', (phoneId) => {
+    const phones = PhoneService.getAll();
+    this._catalog.show(phones);
 
+    this._catalog.subscribe('add', (phoneId) => {
       this._cart.add(phoneId);
     });
 
@@ -62,6 +62,11 @@ export default class PhonesPage {
   _initFilter() {
     this._filter = new Filter({
       element: document.querySelector('[data-component="filter"]'),
+    });
+
+    this._filter.subscribe('filter', (query) => {
+      const filteredPhones = PhoneService.getAll({ query });
+      this._catalog.show(filteredPhones);
     });
   }
 
