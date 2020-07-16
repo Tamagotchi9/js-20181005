@@ -10,7 +10,7 @@ export default class PhoneViewer extends Component {
     });
 
     this.on('click', 'add-button', () => {
-      this.emit(this._phone.id);
+      this.emit("add", this._phone.id); 
     });
 
     this.on('click', 'small-image', (event) => {
