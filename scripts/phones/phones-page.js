@@ -82,6 +82,12 @@ export default class PhonesPage {
           this._catalog.show(phones);
         });
 
+    setTimeout(() => {
+      phonesPromise
+          .then((phones) => {
+            console.log(phones);
+          });
+    }, 3000);
   }
 
   _render() {
