@@ -64,22 +64,24 @@ export default class PhonesPage {
     });
 
     this._filter.subscribe('filter', (query) => {
-      this._query = query;
+      this._currentQuery = query;
       this._showFilteredPhones();
     });
 
     this._filter.subscribe('change-order', (orderBy) => {
-      this._orderBy = orderBy;
+      this._currentOrderBy = orderBy;
       this._showFilteredPhones();
     });
   }
 
   _showFilteredPhones() {
-    const phones = PhoneService.getAll({
-      query: this._query,
-      orderBy: this._orderBy,
-    });
-    this._catalog.show(phones);
+    const phonesPromise = PhoneService.getAllPromise({query: this._currentQuery, orderBy: this._currentOrderBy});
+
+    phonesPromise
+        .then((phones) => {
+          this._catalog.show(phones);
+        });
+
   }
 
   _render() {

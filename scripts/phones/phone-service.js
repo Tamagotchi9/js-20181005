@@ -218,11 +218,45 @@ const phoneDetailsFromServer = {
   }
 };
 
+class MyPromise {
 
+}
 const PhoneService = {
   getAll({ query, orderBy } = {}) {
-    let filteredPhones = this._filter(phonesFromServer, query);
-    return this._sort(filteredPhones, orderBy);
+    setTimeout(() => {
+      const phones = phonesFromServer;
+      const filteredPhones = this._filter(phones, query);
+      const sortedPhones = this._sort(filteredPhones, orderBy);
+
+      resolve(sortedPhones);
+    });
+  },
+
+  getAllPromise({ query, orderBy } = {}) {
+    let promise = {
+
+      _successCallbacks: [],
+
+      then(callback) {
+        this._successCallbacks.push(callback);
+      },
+
+      _resolve(data) {
+        this._successCallbacks.forEach( callback => {
+          callback(data);
+        });
+      }
+    };
+
+    setTimeout(() => {
+      const phones = phonesFromServer;
+      const filteredPhones = this._filter(phones, query);
+      const sortedPhones = this._sort(filteredPhones, orderBy);
+
+      promise._resolve(sortedPhones);
+    });
+
+    return promise;
   },
 
   getOneById(phoneId) {
