@@ -219,9 +219,11 @@ const phoneDetailsFromServer = {
 };
 
 class MyPromise {
-  constructor() {
+  constructor(behaviourFunction) {
     this._status = 'pending';
     this._successCallbacks = [];
+
+    behaviourFunction(this._resolve.bind(this));
   }
 
   then(callback) {
@@ -253,15 +255,17 @@ const PhoneService = {
   },
 
   getAllPromise({ query, orderBy } = {}) {
-    let promise = new MyPromise();
+    let promise = new MyPromise(
+        (resolve) => {
+          setTimeout(() => {
+            const phones = phonesFromServer;
+            const filteredPhones = this._filter(phones, query);
+            const sortedPhones = this._sort(filteredPhones, orderBy);
 
-    setTimeout(() => {
-      const phones = phonesFromServer;
-      const filteredPhones = this._filter(phones, query);
-      const sortedPhones = this._sort(filteredPhones, orderBy);
-
-      promise._resolve(sortedPhones);
-    }, 1000);
+            resolve(sortedPhones);
+          }, 1000);
+        }
+    );
 
     return promise;
   },
