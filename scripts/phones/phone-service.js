@@ -243,7 +243,13 @@ const PhoneService = {
   },
 
   _sort(phones, orderBy) {
-    return phones;
+    if(!orderBy) {
+      return phones;
+    }
+
+    return [...phones].sort((phone1, phone2) => {
+      return (phone1[orderBy] > phone2[orderBy]) ? 1 : -1;
+    });
   }
 }
 

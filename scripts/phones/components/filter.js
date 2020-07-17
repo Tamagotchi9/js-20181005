@@ -9,6 +9,10 @@ export  default class Filter extends Component {
         this.on('input', 'query', (event) => {
             this.emit('filter',event.delegateTarget.value);
         });
+
+        this.on('change', 'order-by', (event) => {
+            this.emit('change-order',event.delegateTarget.value);
+        });
     }
 
     _render() {
@@ -21,7 +25,7 @@ export  default class Filter extends Component {
     
             <p>
               Sort by:
-              <select>
+              <select data-element="order-by">
                 <option value="name">Alphabetical</option>
                 <option value="age">Newest</option>
               </select>

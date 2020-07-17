@@ -24,6 +24,7 @@ export default class PhoneCatalog extends Component {
   show(phones) {
     this._phones = phones;
     this._render();
+    super.show();
   }
 
   _render() {
