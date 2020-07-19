@@ -30,10 +30,15 @@ export default class PhonesPage {
     });
 
     this._catalog.subscribe('phone-selected', (phoneId) => {
-      const phoneDetails = PhoneService.getOneById(phoneId);
+      const promise = PhoneService.getOneById(phoneId);
 
-      this._catalog.hide();
-      this._viewer.show(phoneDetails);
+      promise.then((phoneDetails) => {
+        this._catalog.hide();
+        this._viewer.show(phoneDetails);
+      });
+      promise.catch(error => {
+        console.log(error);
+      })
     });
   }
 

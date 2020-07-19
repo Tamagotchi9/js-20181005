@@ -1,15 +1,26 @@
-
 let http = require('http');
 var static = require('node-static');
-var file = new static.Server('.');
+var file = new static.Server('.', {
+    cache: 0,
+    /*headers: {
+        'Access-Control-Allow-Origin': 'https://mgrinko.github.io',
+        'Access-Control-Allow-Methods': 'POST, GET',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    }*/
+});
 
-http.createServer(function (request, response) {
-    request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        file.serve(request, response);
-    }).resume();
-}).listen(3000);
+function accept(req, res) {
+    if (req.url.startsWith('/api')) {
+
+        setTimeout(() => {
+            file.serve(req, res);
+        }, 5000);
+
+    } else {
+        file.serve(req, res);
+    }
+}
+
+http.createServer(accept).listen(3000);
 
 console.log('Server running on port 3000');

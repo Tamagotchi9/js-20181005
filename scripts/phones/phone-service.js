@@ -154,46 +154,9 @@ const phonesFromServer = [
   }
 ];
 
-class MyPromise {
-  constructor(behaviourFunction) {
-    this._status = 'pending';
-    this._successCallbacks = [];
-
-
-    behaviourFunction(this._resolve.bind(this));
-  }
-
-  then(callback, errorCallback) {
-    if(this._status === 'rejected') {
-      errorCallback();
-    }
-    else if(this._status === 'fulfilled'){
-      callback(this._result);
-    }
-    else {
-      this._successCallbacks.push(callback);
-    }
-  }
-
-  _resolve(data) {
-    this._status = 'fulfilled';
-    this._result = data;
-
-    this._successCallbacks.forEach( callback => {
-      callback(data);
-    });
-  }
-
-  _reject(error) {
-    this._status = 'rejected';
-    this._error = error;
-
-
-  }
-}
 const PhoneService = {
   getAll({ query, orderBy } = {}) {
-    return new MyPromise(
+    return new Promise(
         (resolve) => {
           setTimeout(() => {
             const filteredPhones = this._filter(phonesFromServer, query);
@@ -206,15 +169,21 @@ const PhoneService = {
   },
 
   getOneById(phoneId) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET',`http://localhost:3000/api/phones/${phoneId}.json`, false)
-    xhr.send();
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET',
+          `http://localhost:3000/api/phones/${phoneId}.json`,
+          true);
+      xhr.send();
 
-    if(xhr.status !== 200) {
-      console.error(xhr.status + ' : ' + xhr.statusText);
-    } else {
-      return JSON.parse(xhr.responseText);
-    }
+      xhr.onload = () => {
+        if(xhr.status !== 200) {
+          reject(new Error(xhr.status + ' : ' + xhr.statusText));
+        } else {
+           resolve(JSON.parse(xhr.responseText));
+        }
+      };
+    });
   },
 
   _filter(phones, query) {
