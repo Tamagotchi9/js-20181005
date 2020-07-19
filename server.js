@@ -2,11 +2,11 @@ let http = require('http');
 var static = require('node-static');
 var file = new static.Server('.', {
     cache: 0,
-    /*headers: {
+    headers: {
         'Access-Control-Allow-Origin': 'https://mgrinko.github.io',
         'Access-Control-Allow-Methods': 'POST, GET',
         'Access-Control-Allow-Headers': 'Content-Type'
-    }*/
+    }
 });
 
 function accept(req, res) {

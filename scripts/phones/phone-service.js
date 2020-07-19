@@ -1,16 +1,21 @@
+const API_URL = `https://mgrinko.github.io/js-20181004/api`;
 
 const PhoneService = {
   getAll({ query, orderBy } = {}) {
-    return this.sendRequest(`http://localhost:3000/api/phones.json`)
+      return this.fetchData(`/phones`)
         .then(phones => {
-          const filteredPhones = this._filter(phones, query);
-          const sortedPhones = this._sort(filteredPhones, orderBy);
-          return sortedPhones;
+            const filteredPhones = this._filter(phones, query);
+            return this._sort(filteredPhones, orderBy);
         })
   },
 
   getOneById(phoneId) {
-    return this.sendRequest(`http://localhost:3000/api/phones/${phoneId}.json`);
+      return this.fetchData(`/phones/${ phoneId }`);
+  },
+
+  fetchData(url, params = {}) {
+      return fetch(`${ API_URL }${ url }.json`, params)
+          .then((response) => response.json())
   },
 
   sendRequest(url, {method = "GET"} = {}) {
