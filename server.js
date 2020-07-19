@@ -14,7 +14,7 @@ function accept(req, res) {
 
         setTimeout(() => {
             file.serve(req, res);
-        }, 5000);
+        }, 500);
 
     } else {
         file.serve(req, res);
