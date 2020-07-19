@@ -36,9 +36,6 @@ export default class PhonesPage {
         this._catalog.hide();
         this._viewer.show(phoneDetails);
       });
-      promise.catch(error => {
-        console.log(error);
-      })
     });
   }
 
@@ -79,14 +76,12 @@ export default class PhonesPage {
     });
   }
 
-  _showFilteredPhones() {
-    PhoneService.getAll({
+  async _showFilteredPhones() {
+    const phones = await PhoneService.getAll({
       query: this._currentQuery,
       orderBy: this._currentOrderBy
     })
-      .then((phones) => {
         this._catalog.show(phones);
-      });
   }
 
   _render() {
