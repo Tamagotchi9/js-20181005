@@ -75,19 +75,13 @@ export default class PhonesPage {
   }
 
   _showFilteredPhones() {
-    const phonesPromise = PhoneService.getAllPromise({query: this._currentQuery, orderBy: this._currentOrderBy});
-
-    phonesPromise
-        .then((phones) => {
-          this._catalog.show(phones);
-        });
-
-    setTimeout(() => {
-      phonesPromise
-          .then((phones) => {
-            console.log(phones);
-          });
-    }, 3000);
+    PhoneService.getAll({
+      query: this._currentQuery,
+      orderBy: this._currentOrderBy
+    })
+      .then((phones) => {
+        this._catalog.show(phones);
+      });
   }
 
   _render() {
