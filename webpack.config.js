@@ -8,7 +8,7 @@ module.exports = {
         filename: "build.js"
     },
 
-    watch: true,
+    // watch: true,
     devtool: 'source-map',
 
     module: {
@@ -16,6 +16,10 @@ module.exports = {
             {
                 test: /\.hbs$/,
                 loader: "handlebars-loader"
+            },
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ]
             },
             {
                 test: /\.js$/,
@@ -29,5 +33,10 @@ module.exports = {
                 }
             }
         ]
+    },
+
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        port: 9000
     }
 };
