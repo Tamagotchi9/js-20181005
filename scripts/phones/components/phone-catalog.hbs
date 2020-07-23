@@ -1,0 +1,19 @@
+<ul class="phones">
+
+    {{#each phones as |phone|}}
+        <li class="thumbnail" data-element="phone-item" data-phone-id="{{ phone.id }}">
+            <a href="#{{ phone.id }}" class="thumb" data-element="phone-link">
+                <img alt="{{ phone.name }}" src="{{ phone.imageUrl }}">
+            </a>
+
+            <div class="phones__btn-buy-wrapper">
+                <a class="btn btn-success" data-element="add-button">
+                    Add
+                </a>
+            </div>
+
+            <a href="#{{ phone.id }}" data-element="phone-link">{{ phone.name }}</a>
+            <p>{{ phone.snippet }}</p>
+        </li>
+    {{/each}}
+</ul>
