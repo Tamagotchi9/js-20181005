@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Tamagotchi9/js-20181005#readme",
   "devDependencies": {
-    "node-static": "^0.7.11"
+    "node-static": "^0.7.11",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   }
 }
