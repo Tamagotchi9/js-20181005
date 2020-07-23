@@ -95,6 +95,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+alert(1111);
+
 let currentPage = new _phones_phones_page_js__WEBPACK_IMPORTED_MODULE_0__["default"]({
   element: document.querySelector('[data-page-container]'),
 });
@@ -576,3 +578,4 @@ const PhoneService = {
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=build.js.map

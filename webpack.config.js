@@ -7,4 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, 'public'),
         filename: "build.js"
     },
+
+    watch: true,
+    devtool: 'source-map',
 };
