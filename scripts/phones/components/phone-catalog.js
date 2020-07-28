@@ -1,7 +1,6 @@
 import Component from '../../component.js';
 
 import templateFunction from './phone-catalog.hbs';
-import './phone-catalog.css';
 
 export default class PhoneCatalog extends Component {
   constructor({ element }) {

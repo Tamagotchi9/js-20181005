@@ -18,10 +18,6 @@ module.exports = {
                 loader: "handlebars-loader"
             },
             {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
-            },
-            {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
                 use: {
